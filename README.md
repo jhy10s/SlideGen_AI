@@ -59,7 +59,7 @@ Before you begin, ensure you have:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/Ahmadjamil888/SlideGen_AI.git
 cd slide-generator-saas
 
 # Install dependencies
